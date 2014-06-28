@@ -1,0 +1,1 @@
+ALTER TABLE  `tv_photo` CHANGE  `category_id`  `category_id` BIGINT( 20 ) UNSIGNED NULL DEFAULT NULL COMMENT '0: gallery; 1: tour; 3:hotel; 5: Cuisine; 7: News; 9: Destination; 11:Attraction';

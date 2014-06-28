@@ -1,0 +1,1 @@
+ALTER TABLE `tv_sight` ADD `top_choice` TINYINT(1) NOT NULL DEFAULT '0' AFTER `area`;
