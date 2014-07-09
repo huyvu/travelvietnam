@@ -45,27 +45,46 @@
 					foreach ($items as $item) {
 						$city = $this->m_tour_destination->load($item->city);
 						$count = $this->m_review->getItemsCount(11,$item->id,1);
+						$avg_rating = 0;
+						$rev_info->category_id = 11;
+						$rev_info->ref_id = $item->id;
+						$reviews = $this->m_review->getItems($rev_info,1);
+						foreach ($reviews as $review) {
+							$avg_rating += $review->rating;
+						}
+						if (sizeof($reviews)) {
+							$avg_rating = round($avg_rating / sizeof($reviews));
+						}else{
+							$avg_rating = 4;
+						}
 				?>
-				<div class="destination destination<?=$idx?> row<?=$row?> <?=(($row>1)?"none":"")?>">
-					<div class="flag">
-						<img alt="" src="<?=IMG_URL?>vietnam/shopping.png">
+				<div style="overflow: inherit;position: relative;float: left;">
+					<?if($item->top_choice) :?>
+					<div class="top-choice">
+						<img alt="" src="<?=IMG_URL?>destination/top-choice.png">
 					</div>
-					<div class="thumbnail">
-						<a title="<?=$item->title?>" href="<?=site_url("vietnam/shopping/{$item->alias}")?>">
-							<img alt="<?=$item->title?>" src="<?=$item->thumbnail?>">
-						</a>
-					</div>
-					<div class="content">
-						<p style="font-style: italic;font-size: 13px;color: #cc6633">Out door</p>
-						<h1 class="title">
-							<a title="<?=$item->title?>" href="<?=site_url("vietnam/shopping/{$item->alias}")?>"><?=$item->title?></a>
-						</h1>
-						<p class="reviews">
-							<img src="<?=IMG_URL?>tour/icon/star5.png" alt="rating" height="15">
-							<a href="#"><?=$count->count?> <?=($count->count>1)?'Reviews':'Review'?></a>
-						</p>
-						<div class="summary">
-							<?=$item->summary?>
+					<?endif?>
+					<div class="destination destination<?=$idx?> row<?=$row?> <?=(($row>1)?"none":"")?>">
+						<div class="flag">
+							<img alt="" src="<?=IMG_URL?>vietnam/shopping.png">
+						</div>
+						<div class="thumbnail">
+							<a title="<?=$item->title?>" href="<?=site_url("vietnam/shopping/{$item->alias}")?>">
+								<img alt="<?=$item->title?>" src="<?=$item->thumbnail?>">
+							</a>
+						</div>
+						<div class="content">
+							<p style="font-style: italic;font-size: 13px;color: #cc6633">Out door</p>
+							<h1 class="title">
+								<a title="<?=$item->title?>" href="<?=site_url("vietnam/shopping/{$item->alias}")?>"><?=$item->title?></a>
+							</h1>
+							<p class="reviews">
+								<img src="<?=IMG_URL?>tour/icon/star<?=$avg_rating?>.png" alt="rating" height="15">
+								<a href="#"><?=$count->count?> <?=($count->count>1)?'Reviews':'Review'?></a>
+							</p>
+							<div class="summary">
+								<?=$item->summary?>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -91,9 +110,9 @@
 			<ul>
 				<?if (isset($dest)) {?>
 					<li><a href="<?=(sizeof($sights)!=0)?site_url("vietnam/sights/{$dest->alias}"):site_url("vietnam/sights")?>" class="attraction">Attractions <span>(<?=sizeof($sights)?>)</span></a></li>
-					<li><a href="<?=(sizeof($items)!=0)?site_url("vietnam/restaurants/{$dest->alias}"):site_url("vietnam/restaurants")?>" class="restaurant">Restaurants <span>(<?=sizeof($items)?>)</span></a></li>
+					<li><a href="<?=(sizeof($restaurants)!=0)?site_url("vietnam/restaurants/{$dest->alias}"):site_url("vietnam/restaurants")?>" class="restaurant">Restaurants <span>(<?=sizeof($restaurants)?>)</span></a></li>
 					<li><a href="<?=(sizeof($items)!=0)?site_url("vietnam/shopping/{$dest->alias}"):site_url("vietnam/shopping")?>" class="shopping">Shopping <span>(<?=sizeof($items)?>)</span></a></li>
-					<li><a href="<?=(sizeof($items)!=0)?site_url("vietnam/entertainments/{$dest->alias}"):site_url("vietnam/entertainments")?>" class="entertainment">Entertainments <span>(<?=sizeof($items)?>)</span></a></li>
+					<li><a href="<?=(sizeof($entertainments)!=0)?site_url("vietnam/entertainments/{$dest->alias}"):site_url("vietnam/entertainments")?>" class="entertainment">Entertainments <span>(<?=sizeof($entertainments)?>)</span></a></li>
 					<li><a href="<?=(sizeof($tours)!=0)?site_url("tours/vietnam/{$destination->alias}"):site_url("tours/search")?>" class="tours">Tours <span>(<?=sizeof($tours)?>)</span></a></li>
 				<?}?>
 				

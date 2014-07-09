@@ -4,8 +4,8 @@
 		$entertainment_info->destinations = array($dest->destination_id);
 		$entertainments = $this->m_entertainment->getItems($entertainment_info,1);
 
-		$shopping_info->destinations = array($dest->destination_id);
-		$shoppings = $this->m_shopping->getItems($shopping_info,1);
+		$restaurant_info->destinations = array($dest->destination_id);
+		$restaurants = $this->m_restaurant->getItems($restaurant_info,1);
 
 		$sight_info->destinations = array($dest->destination_id);
 		$sights = $this->m_sight->getItems($sight_info,1);
@@ -14,7 +14,7 @@
 		$tours = $this->m_tour->getItems($tour_info, 1);			
 	}else{
 		$entertainments = $this->m_entertainment->getItems(1);
-		$shoppings = $this->m_shopping->getItems(1);
+		$restaurants = $this->m_restaurant->getItems(1);
 		$sights = $this->m_sight->getItems(1);
 		$tours = $this->m_tour->getItems(NULL, 1);		
 	}
@@ -30,11 +30,11 @@
 		<?if(isset($dest)) :?>
 		<img alt="" src="<?=IMG_URL?>arrow.png">
 		<a class="pathway" title="Vietnam Top Destinations" href="<?=site_url("vietnam/top-destinations/{$destination->alias}")?>"><?=$dest->title?></a>
-		<img alt="" src="<?=IMG_URL?>arrow.png">Restaurants of <?=$dest->title?>
+		<img alt="" src="<?=IMG_URL?>arrow.png">Shopping of <?=$dest->title?>
 		<?endif?>
 		<? require_once(APPPATH."views/module/social.php"); ?>
 	</div>
-	<h1 class="page-title"><?=(isset($dest))?strtoupper($dest->title)."'S RESTAURANTS":"RESTAURANTS IN VIETNAM"?></h1>
+	<h1 class="page-title"><?=(isset($dest))?strtoupper($dest->title)."'S SHOPPING":"SHOPPING IN VIETNAM"?></h1>
 	<div class="left" style="width: 680px">
 		<div id="things-todo">
 			<div class="sights">
@@ -66,17 +66,17 @@
 					<?endif?>
 					<div class="destination destination<?=$idx?> row<?=$row?> <?=(($row>1)?"none":"")?>">
 						<div class="flag">
-							<img alt="" src="<?=IMG_URL?>vietnam/restaurant.png">
+							<img alt="" src="<?=IMG_URL?>vietnam/shopping.png">
 						</div>
 						<div class="thumbnail">
-							<a title="<?=$item->title?>" href="<?=site_url("vietnam/restaurants/{$item->alias}")?>">
+							<a title="<?=$item->title?>" href="<?=site_url("vietnam/shopping/{$item->alias}")?>">
 								<img alt="<?=$item->title?>" src="<?=$item->thumbnail?>">
 							</a>
 						</div>
 						<div class="content">
 							<p style="font-style: italic;font-size: 13px;color: #cc6633">Out door</p>
 							<h1 class="title">
-								<a title="<?=$item->title?>" href="<?=site_url("vietnam/restaurants/{$item->alias}")?>"><?=$item->title?></a>
+								<a title="<?=$item->title?>" href="<?=site_url("vietnam/shopping/{$item->alias}")?>"><?=$item->title?></a>
 							</h1>
 							<p class="reviews">
 								<img src="<?=IMG_URL?>tour/icon/star<?=$avg_rating?>.png" alt="rating" height="15">
@@ -111,7 +111,7 @@
 				<?if (isset($dest)) {?>
 					<li><a href="<?=(sizeof($sights)!=0)?site_url("vietnam/sights/{$dest->alias}"):site_url("vietnam/sights")?>" class="attraction">Attractions <span>(<?=sizeof($sights)?>)</span></a></li>
 					<li><a href="<?=(sizeof($items)!=0)?site_url("vietnam/restaurants/{$dest->alias}"):site_url("vietnam/restaurants")?>" class="restaurant">Restaurants <span>(<?=sizeof($items)?>)</span></a></li>
-					<li><a href="<?=(sizeof($shoppings)!=0)?site_url("vietnam/shopping/{$dest->alias}"):site_url("vietnam/shopping")?>" class="shopping">Shopping <span>(<?=sizeof($shoppings)?>)</span></a></li>
+					<li><a href="<?=(sizeof($items)!=0)?site_url("vietnam/shopping/{$dest->alias}"):site_url("vietnam/shopping")?>" class="shopping">Shopping <span>(<?=sizeof($items)?>)</span></a></li>
 					<li><a href="<?=(sizeof($items)!=0)?site_url("vietnam/entertainments/{$dest->alias}"):site_url("vietnam/entertainments")?>" class="entertainment">Entertainments <span>(<?=sizeof($items)?>)</span></a></li>
 					<li><a href="<?=(sizeof($tours)!=0)?site_url("tours/vietnam/{$destination->alias}"):site_url("tours/search")?>" class="tours">Tours <span>(<?=sizeof($tours)?>)</span></a></li>
 				<?}?>
@@ -132,10 +132,9 @@
 		</select>
 		<!-- #destination-select -->
 
-
 		<div id="todo-filter-widget">
 			<div class="container">
-				<form id="filter-form" action="<?=site_url("vietnam/restaurants")?>" method="POST">
+				<form id="filter-form" action="<?=site_url("vietnam/shopping")?>" method="POST">
 					<div class="widget-title">TYPES</div>
 					<div class="widget-content">
 						<?

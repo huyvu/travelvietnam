@@ -57,8 +57,7 @@ class M_Restaurant extends CI_Model
 			}
 			if (!empty($info->destinations))
 			{
-				$destination = $info->destinations;
-				$sql .= " AND LOCATE('-{$destination[0]}-',REPLACE(CONCAT('-', tv_restaurant.city, '-'), ';', '-'))<>0";
+				$sql .= " AND city IN (".implode(",", $info->destinations).")";
 			}
 			if (!empty($info->categories))
 			{

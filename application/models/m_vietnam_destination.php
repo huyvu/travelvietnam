@@ -3,7 +3,7 @@ class M_Vietnam_Destination extends CI_Model
 {
 	function load($id)
 	{
-		$sql   = "SELECT * FROM tv_vietnam_destination WHERE id = '{$id}' OR alias = '{$id}'";
+		$sql   = "SELECT * FROM tv_vietnam_destination WHERE id = '{$id}' OR alias = '{$id}' AND active = 1";
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
 			$row = $query->row();
